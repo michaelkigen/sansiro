@@ -39,14 +39,14 @@ class SendVerificationCode(APIView):
         print(phone_number)
 
         # Validate input parameters
-
+        print("STARTING STEP 2")
         try:
             # Check if a verification record already exists for the phone number
             verification_record = Verifications.objects.get(phone_number=phone_number)
             verification_record.delete()
         except Verifications.DoesNotExist:
-            pass  # No existing record, proceed
-        print("CHECKING DB DONE")
+              # No existing record, proceed
+            print("CHECKING DB NOT DONE")
         verification_code = generate_verification_code()
         print(verification_code)
 
