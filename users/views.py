@@ -151,9 +151,11 @@ class User_registration(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-
+        print("STEP ONE")
         verification_code = request.data.get('verification_code')
+        print("STEP two ", verification_code)
         phone_number = request.data.get('phone_number')
+        print("STEP three ", phone_number)
         
 
         try:
