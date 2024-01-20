@@ -46,7 +46,7 @@ class SendVerificationCode(APIView):
             verification_record.delete()
         except Verifications.DoesNotExist:
             pass  # No existing record, proceed
-
+        print("CHECKING DB DONE")
         verification_code = generate_verification_code()
         print(verification_code)
 
