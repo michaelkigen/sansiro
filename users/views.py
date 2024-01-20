@@ -40,13 +40,13 @@ class SendVerificationCode(APIView):
 
         # Validate input parameters
         print("STARTING STEP 2")
-        try:
-            # Check if a verification record already exists for the phone number
-            verification_record = Verifications.objects.get(phone_number=phone_number)
-            verification_record.delete()
-        except Verifications.DoesNotExist:
+        # try:
+        #     # Check if a verification record already exists for the phone number
+        #     verification_record = Verifications.objects.get(phone_number=phone_number)
+        #     verification_record.delete()
+        # except Verifications.DoesNotExist:
               # No existing record, proceed
-            print("CHECKING DB NOT DONE")
+        print("CHECKING DB NOT DONE")
         verification_code = generate_verification_code()
         print(verification_code)
 
@@ -61,7 +61,7 @@ class SendVerificationCode(APIView):
         # Send SMS using Twilio
         try:
             print('step 1')
-            account_sid = "AC94d634c48c7f12dfb8f6af8f0b1614c2"
+            account_sid = "BUe167e6ec128b6345630064199012a00b"
             auth_token = "98636a4a87699fd0951f2c06ddd3a21f"
             client = Client(account_sid, auth_token)
             print('step 2')
