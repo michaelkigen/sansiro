@@ -169,7 +169,7 @@ class User_registration(APIView):
         sent_time = verification.verification_code_sent
         current_time = datetime.now(timezone.utc)
         delta = current_time - sent_time
-        if abs(delta.total_seconds()) > 60:
+        if abs(delta.total_seconds()) > 120:
             Verifications.objects.filter(phone_number = phone_number).delete()
             return Response({'message': 'Verification code has expired. Please request a new code.'},
                             status=status.HTTP_400_BAD_REQUEST)
