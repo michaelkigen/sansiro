@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import CartViewSet, MenuAPiView, MenuupdateAPiView,Orderdetailed, AddToCartViewSet,CheckoutView,ProcessOrderView,OrdererdFood
+from .views import CartViewSet, MenuAPiView, MenuupdateAPiView,Orderdetailed, AddToCartViewSet,CheckoutView,ProcessOrderView,OrdererdFood,webhook_notification
 #from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 from django.urls import path, include
 
@@ -28,5 +28,6 @@ urlpatterns = [
     path("food/", MenuAPiView.as_view({'get': 'list','post': 'create'})),
     path("food/<uuid:food_id>/", MenuupdateAPiView.as_view()),
     path("order/<uuid:order_id>/", Orderdetailed.as_view()),
-    path("orderd-food/", OrdererdFood.as_view())
+    path('webhook/notification/', webhook_notification, name='webhook_notification'),
+    path("orderd-food/", OrdererdFood)
 ]
