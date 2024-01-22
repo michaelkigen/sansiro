@@ -231,12 +231,12 @@ TERMII_SENDER_ID = 'your_termii_sender_id'
 
 ## Mpesa configuration
 
-MPESA_ENVIRONMENT = 'sandbox'
+MPESA_ENVIRONMENT = 'production'
 HOST_NAME= 'https://treegroup@maiyotech.com'  
 CONSUMER_KEY = os.environ.get("MPESA_CONSUMER_KEY")
 CONSUMER_SECRET = os.environ.get("MPESA_CONSUMER_SECRET")
 MPESA_SHORTCODE = os.environ.get("MPESA_SHORTCODE")
-SAFARICOM_API = 'https://sandbox.safaricom.co.ke'
+SAFARICOM_API = 'https://api.safaricom.co.ke'
 MPESA_EXPRESS_SHORTCODE = os.environ.get("MPESA_SHORTCODE")
 MPESA_SHORTCODE_TYPE = 'till'
 MPESA_PASSKEY = os.environ.get("MPESA_PASS_KEY")
