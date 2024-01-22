@@ -400,7 +400,7 @@ class OrdererdFood(views.APIView):
         except Exception as e:
             # Log the exception for debugging purposes
             print(f"Error: {str(e)}")
-            return Response({'detail': 'Internal Server Error.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'detail': 'Internal Server Error.'}, status=status.HTTP_401_UNAUTHORIZED)
 from rest_framework.decorators import api_view
        
 @api_view(['POST'])
