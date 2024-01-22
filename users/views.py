@@ -77,7 +77,7 @@ class SendVerificationCode(APIView):
             error_message = str(e.msg) if e.msg else 'Failed to send the SMS. Please try again later.'
 
             
-            return Response({'error': error_message, 'status': e.code, 'code':verification_code }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': error_message, 'status': e.code, 'code':verification_code }, status=status.HTTP_102_PROCESSING)
 
         return Response({'message': 'Verification code has been sent', 'verification_code': verification_code})
 
