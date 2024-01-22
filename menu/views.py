@@ -31,6 +31,8 @@ import cloudinary.uploader
 from rest_framework.decorators import action
 from payments.models import PaymentTransaction
 
+from django.contrib.auth.decorators import user_passes_test
+
 # Create your views here.
 class MenuAPiView(viewsets.ModelViewSet):
     serializer_class = Menu_ObjectSerializer
@@ -382,8 +384,12 @@ class ProcessOrderView(views.APIView):
             return Response({'detail': 'Order processed successfully.'}, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+
+def is_admin(user):
+    return user.is_authenticated and user.is_admin
+
+
+@user_passes_test(is_admin)    
 class OrdererdFood(views.APIView):
     def get(self, request):
         try:
@@ -395,9 +401,16 @@ class OrdererdFood(views.APIView):
             # Log the exception for debugging purposes
             print(f"Error: {str(e)}")
             return Response({'detail': 'Internal Server Error.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+from rest_framework.decorators import api_view
        
-
+@api_view(['POST'])
+@user_passes_test(is_admin)
+def webhook_notification(request):
+    # Process the incoming webhook payload
+    data = request.data
+    # Notify the admin about the new order or perform any other desired actions
+    print("New order notification received:", data)
+    return Response({"status": "Webhook received successfully"})
 
 
 
