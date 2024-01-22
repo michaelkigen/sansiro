@@ -151,9 +151,6 @@ class SubmitView(APIView):
         cart = Cart.objects.filter(user=user).first()
 
         if cart is None:
-            # Handle the case where the user does not have a cart
-            # Return an appropriate response or raise an exception
-            # For example, you can return a 404 response:
             return Response({"detail": "Cart not found."}, status=HTTP_404_NOT_FOUND)
 
         total = sum([item.quantity * item.food.price for item in cart.cart_item.all()])
@@ -168,16 +165,18 @@ class SubmitView(APIView):
         if data.get('paybill_account_number'):
             paybill_account_number = data.get('paybill_account_number')
 
-        trans = PaymentTransaction.objects.create()
-        print('TRANSACTION INSTANCE :', trans)
-        transaction_id = sendSTK(phone_number, amount, entity_id, transaction_id=trans)
-
-        # b2c()
-        
-        
-        message = {"status": "ok", "transaction_id": transaction_id}
-        return Response(message, status=HTTP_200_OK)
-
+        try:
+            transaction_id = sendSTK(phone_number, amount, entity_id)
+            if transaction_id:
+                message = {"status": "ok", "transaction_id": transaction_id}
+                return Response(message, status=HTTP_200_OK)
+            else:
+                # Handle the case where transaction_id is not available
+                return Response({"detail": "Transaction ID not available."}, status=HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            # Log the exception for debugging purposes
+            print(f"Error in sendSTK: {str(e)}")
+            return Response({"error": "An unexpected error occurred during STK push."}, status=HTTP_400_BAD_REQUEST)
 
 class CheckTransactionOnline(APIView):
     permission_classes = [AllowAny]
