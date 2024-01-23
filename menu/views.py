@@ -394,9 +394,13 @@ class OrdererdFood(views.APIView):
     def get(self, request):
         try:
             orders = Order.objects.all()
+            order_count = orders.count()
             order_serializer = Order_Serializer(orders, many=True)
-            print("4 : ", order_serializer.data)
-            return Response(order_serializer.data)
+            response = {
+                "order_count":order_count,
+                "orders":order_serializer.data
+            }
+            return Response(response)
         except Exception as e:
             # Log the exception for debugging purposes
             print(f"Error: {str(e)}")
