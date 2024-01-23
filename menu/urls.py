@@ -29,5 +29,5 @@ urlpatterns = [
     path("food/<uuid:food_id>/", MenuupdateAPiView.as_view()),
     path("order/<uuid:order_id>/", Orderdetailed.as_view()),
     path('webhook/notification/', webhook_notification, name='webhook_notification'),
-    path("orderd-food/", OrdererdFood)
+    path("orderd-food/", OrdererdFood.as_view())
 ]

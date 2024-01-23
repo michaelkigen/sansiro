@@ -389,7 +389,7 @@ def is_admin(user):
     return user.is_authenticated and user.is_admin
 
 
-@user_passes_test(is_admin)    
+# @user_passes_test(is_admin)    
 class OrdererdFood(views.APIView):
     def get(self, request):
         try:
