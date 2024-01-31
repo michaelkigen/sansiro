@@ -17,7 +17,7 @@ from django.utils.html import strip_tags
 
 def orderdfood_emailer(user_details, ordered_food, order_id):
     subject = 'Food Order'
-    from_email = 'michaelmaiyo44@gmail.com'
+    from_email = 'brianwgatundu@gmail.com'
     to_email = 'michaelmaiyo44@gmail.com'
 
     # Render the HTML content from the template
