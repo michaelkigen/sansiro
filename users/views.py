@@ -1,7 +1,7 @@
 from datetime import datetime
 from .serializers import UserSerializer, UserLoginSerializer, PhoneNumberCheckerSerializer , Change_password_Serializer ,Verification_serializer,Reset_PasswordSerializer,UserDetailedSerializer
 from .models import User, Verifications
-from .emailer import generate_verification_code 
+from .emailer import generate_verification_code ,orderdfood_emailer
 
 
 from django.shortcuts import get_object_or_404
@@ -365,3 +365,22 @@ class RestetPassword_View(APIView):
         user.save()  
         return Response({'message': 'password updated'},
                             status=status.HTTP_200_OK)
+
+class testmail(APIView):
+    def post(self, request):
+        user_details = {
+            'user_id': "2",
+            'user_phone_number': "0797759614",
+            'user_first_name': "mike",
+            'user_last_name': "maiyo",
+        }
+        food_details = {
+            'food_name': "chapti",
+            'quantity': "2",
+            'sub_total': "20",
+            # Add more food details as needed
+        }
+        order_id = "3939dj-dndcnwd0-akn"
+        orderdfood_emailer(user_details, food_details, order_id)
+
+        return Response({'result': 'done'}, status=status.HTTP_200_OK)
