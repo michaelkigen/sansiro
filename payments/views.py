@@ -49,8 +49,47 @@ import qrcode
 from PIL import Image
 from menu.views import CheckoutView
 from django.shortcuts import get_object_or_404
-from users.emailer import send_center_sms
+from users.emailer import send_center_sms,orderdfood_emailer
 # Create your views here.
+
+
+def send_email(order_id):
+    try:
+        order = Order.objects.get(order_id=order_id)
+    except Order.DoesNotExist:
+        return 'Order not found'
+
+    # Access user details from the order
+    user_details = {
+        'user_id': order.user.id,
+        'user_phone_number': order.user.phone_number,
+        'user_first_name': order.user.first_name,
+        'user_last_name': order.user.last_name,
+    }
+
+    # Access the related food items through the ordered_food reverse relation
+    food_items = order.ordered_food.all()
+
+    # Create a list to store food item dictionaries
+    food_list = []
+
+    # Loop through food items and add each item's details to the list
+    for food_item in food_items:
+        food_details = {
+            'food_name': food_item.food.food_name,
+            'quantity': food_item.quantity,
+            'sub_total': food_item.sub_total,
+            # Add more food details as needed
+        }
+        food_list.append(food_details)
+
+    # Call the email function with the required data
+    result = orderdfood_emailer(user_details, food_list, order_id)
+
+    # If you want to return or do something with the result, modify the function accordingly
+    return result
+
+
 
 def send_sms(order_id):
     try:
@@ -226,7 +265,7 @@ class CheckTransactionOnline(APIView):
                     
                  # Pass the transaction as a list
                 if status_response["result_code"] == "0":
-                    send_sms(order_id)
+                    send_email(order_id)
                     return JsonResponse({"response":status_response,"order_id":order_id}, status=200)
                 return JsonResponse(status_response, status=200)
             else:

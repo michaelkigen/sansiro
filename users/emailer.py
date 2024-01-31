@@ -11,6 +11,36 @@ from django.core.mail import EmailMultiAlternatives
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+def orderdfood_emailer(user_details, ordered_food, order_id):
+    subject = 'Food Order'
+    from_email = 'michaelkigen2021@gmail.com'
+    to_email = 'michaelmaiyo44@gmail.com'
+
+    # Render the HTML content from the template
+    html_message = render_to_string('email_template.html', {'user_details': user_details, 'ordered_food': ordered_food, 'order_id': order_id})
+
+    # Create the plain text version of the email
+    plain_message = strip_tags(html_message)
+
+    # Create the email message
+    email_message = EmailMultiAlternatives(subject, plain_message, from_email, [to_email])
+    email_message.attach_alternative(html_message, 'text/html')
+
+    try:
+        email_message.send()
+        # Email sent successfully
+        return 'Email sent successfully.'
+    except Exception as e:
+        # Handle the exception
+        print(f"Email sending failed: {e}")
+        # Provide an error message to the user
+        return 'Failed to send the email. Please try again later.'
+
+
 
 def generate_verification_code(length=4):
     characters = string.digits  # You can customize the characters used in the verification code

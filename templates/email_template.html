@@ -42,7 +42,7 @@
         color: #777;
       }
 
-      .message {
+      .user-details {
         margin-bottom: 20px;
       }
 
@@ -54,7 +54,11 @@
   <body>
     <div class="container">
       <h1>Food Order Confirmation</h1>
-      <div class="message">
+      <div class="user-details">
+        <p>
+          Dear {{ user_details.user_first_name }} {{ user_details.user_last_name
+          }},
+        </p>
         <p>Thank you for your order! Here are your food orders:</p>
       </div>
       <ul>
@@ -65,6 +69,7 @@
         </li>
         {% endfor %}
       </ul>
+      <p class="reference">Order ID: {{ order_id }}</p>
       <p class="reference">Please keep this email for reference.</p>
     </div>
   </body>
