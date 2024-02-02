@@ -384,3 +384,6 @@ class testmail(APIView):
         orderdfood_emailer(user_details, food_details, order_id)
 
         return Response({'result': 'done'}, status=status.HTTP_200_OK)
+    
+    
+    

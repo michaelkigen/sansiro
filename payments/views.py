@@ -265,7 +265,7 @@ class CheckTransactionOnline(APIView):
                     
                  # Pass the transaction as a list
                 if status_response["result_code"] == "0":
-                    send_email(order_id)
+                    send_sms(order_id)
                     return JsonResponse({"response":status_response,"order_id":order_id}, status=200)
                 return JsonResponse(status_response, status=200)
             else:

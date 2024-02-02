@@ -54,7 +54,7 @@ def send_center_sms(data, user):
     try:
         print('step 1')
         account_sid = "AC94d634c48c7f12dfb8f6af8f0b1614c2"
-        auth_token = "50917f3e65a520aeb570f376e9b1a5e5"
+        auth_token = "a553c8cf4060477b9ac62a9fc194fb64"
         client = Client(account_sid, auth_token)
 
         # Format the data and user details for better readability
