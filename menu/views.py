@@ -16,6 +16,7 @@ from Profile.serializers import LicationSerializer
 from users.serializers import UserDetailedSerializer
 from users.models import User
 from records.views import recorder
+import requests
 
 from django.shortcuts import get_object_or_404
 
@@ -214,7 +215,20 @@ class CheckoutView(views.APIView):
 
         cart = request.user.cart
         order = cart.create_order()
-        
+        webhook_url = "https://lit-bayou-93084-8dfb177157f7.herokuapp.com/menu/orderd-food/"
+  # Replace with your actual Heroku webhook URL
+     
+
+        try:
+            response = requests.get(webhook_url)
+
+            if response.status_code == 200:
+                print("Webhook notification sent successfully.")
+            else:
+                print(f"Failed to send webhook notification. Status code: {response.status_code}")
+
+        except Exception as e:
+            print(f"Error sending webhook notification: {str(e)}")
         serializer = Order_Serializer(order)
         return Response(serializer.data)
     
